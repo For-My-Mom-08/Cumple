@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Exposición conmemorativa de cumpleaños para Mamá - Una galería de arte con sus recuerdos más hermosos, obras de arte y cédulas museográficas.">
+    <title>Museo de Recuerdos · Feliz Cumpleaños Mamá</title>
+
+    <link rel="stylesheet" href="styke.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <canvas id="ambient-canvas"></canvas>
+
+    <header class="museum-header">
+        <div class="header-container">
+            <a href="#inicio" class="museum-brand">
+                <div class="museum-logo-emblem">L</div>
+                <div class="museum-title-group">
+                    <span class="museum-title-top">Galería Retrospectiva</span>
+                    <span class="museum-title-main">Museo de Recuerdos de Mamá</span>
+                </div>
+            </a>
+
+            <div class="header-actions">
+
+                <button id="btn-audio-toggle" class="btn-header" title="Música ambiental de museo">
+                    <i class="fa-solid fa-music"></i>
+                    <span>Música</span>
+                </button>
+
+                <button id="btn-celebrate-top" class="btn-header btn-celebrate" title="¡Celebrar cumpleaños!">
+                    <i class="fa-solid fa-cake-candles"></i>
+                    <span>¡Feliz Cumple!</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="museum-wrapper">
+
+        <section id="inicio" class="hero-section">
+            <div class="hero-spotlight"></div>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-sparkles sparkle"></i>
+                    <span>Exposición Especial de Honor</span>
+                    <i class="fa-solid fa-sparkles sparkle"></i>
+                </div>
+
+                <h1 class="hero-title">
+                    La Obra Maestra Más Bella
+                    <span>Feliz Cumpleaños, Mamá</span>
+                </h1>
+
+                <p class="hero-curatorial-note">
+                    Bienvenida a tu museo personal. Cada fotografía aquí expuesta es un fragmento de tiempo,
+                    una joya capturada y una muestra imborrable del amor, la fuerza y la alegría que iluminan
+                    cada día de nuestras vidas.
+                </p>
+
+                <div class="curator-plaque-banner">
+                    <div class="curator-plaque-icon">
+                        <span style="font-size: 1.6rem; line-height: 1;">🌻</span>
+                    </div>
+                    <div class="curator-plaque-text">
+                        <h4>CÉDULA CURATORIAL · SALA PRINCIPAL</h4>
+
+                        <p>
+                            "Hay vidas que son lienzos en blanco, y hay vidas que, como la tuya, son museos llenos de
+                            color, ternura y sabiduría. Esta retrospectiva conmemora cada uno de tus pasos y sonrisas."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#galeria" class="btn-primary-museum">
+                        <i class="fa-solid fa-compass"></i> Iniciar Recorrido
+                    </a>
+                    <button id="btn-hero-sparkles" class="btn-secondary-museum">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Lanzar Destellos
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <nav class="gallery-rooms-nav" aria-label="Salas del Museo">
+            <button class="room-filter-btn active" data-filter="all">
+                <i class="fa-solid fa-border-all"></i> Toda la Exposición
+            </button>
+            <button class="room-filter-btn" data-filter="sala-1">
+                <i class="fa-solid fa-heart"></i> Sala I: Raíces & Esencia
+            </button>
+            <button class="room-filter-btn" data-filter="sala-2">
+                <i class="fa-solid fa-sun"></i> Sala II: Sonrisas & Travesías
+            </button>
+            <button class="room-filter-btn" data-filter="sala-3">
+                <i class="fa-solid fa-gem"></i> Sala III: Amor Infinito
+            </button>
+        </nav>
+
+        <main id="galeria" class="gallery-section">
+
+            <div class="exhibition-grid" id="exhibition-grid">
+
+                <article class="exhibit-card" data-room="sala-1" data-index="0">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/IMG_20231231_140008.jpg" alt="Obra 01 - Luz Matutina" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 01</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Una mirada para la eternidad”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+                                <span class="plaque-meta-value">Totoy en casa de la abuela</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Luz natural & ternura eterna</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Recuerdo que nace de uno de los muchos días que Roko nos hizo sonreír; su carita tierna es
+                            el eterno recuerdo de la familia que construimos. Imposible olvidar el día que llegó a
+                            nuestras vidas para enseñarnos que mamá también es la que lleva sobre sus hombros el
+                            capricho de una mascota para sus hijos. De igual manera, el día en que nos dejó de acompañar
+                            nos dio una lección de amor y fortaleza que siempre estará en nuestros corazones, recordando
+                            con cariño al viejito dormilón.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-1" data-index="1">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/IMG-20241006-WA0068[1].jpg" alt="Obra 02 - Mirada Serena" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 02</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“El arte donde merece estar”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">La familia en París</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Óleo de miradas que abrazan</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            El caótico viaje a París que nos dio tanto de qué hablar, en especial al recordar la
+                            valentía que tuviste a la hora de afrontar los retos de tantas culturas distintas y, cómo
+                            no, al mismo tiempo lucir los atuendos que hacen brillar tu belleza. En esta foto tuviste la
+                            oportunidad de demostrar que la obra más importante del Louvre ese día eras tú.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-1" data-index="2">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/IMG-20241006-WA0175[1].jpg" alt="Obra 03 - Vínculos del Alma"
+                                class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 03</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Yo soy tu amigo fiel”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Disneyland París</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Complicidad sobre lienzo de vida</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            🎶 Y si un día, tú te encuentras<br>lejos, muy lejos de tu lindo hogar,<br>cierra los ojos y
+                            recuerda que<br>yo soy tu amigo fiel 🎶<br><br>De las fotos con los recuerdos más bonitos
+                            impregnados; cuando visitamos un lugar rodeado de las cosas que marcaron mi infancia y tu
+                            proceso de aprender a ser mamá. Doy gracias a la vida por permitirme ser tu amigo fiel.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-1" data-index="3">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/IMG-20241105-WA0111[1].jpg" alt="Obra 04 - Armonía Pura" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 04</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Mamá, vamos a ver a Slipknot”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">5 de Noviembre, 2024</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Técnica mixta de paciencia y locura</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            De mis actividades mamá/hijo favoritas: ir a conciertos. Con el tiempo aprendí a valorar el
+                            esfuerzo que significaba acompañarme a ver bandas que me estaban acompañando en mi proceso
+                            de crecer; saber que dejabas a un lado tu mundo salsero y tranquilo solo para verme feliz es
+                            algo que siempre trae lágrimas de alegría a mis ojos.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-1" data-index="4">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/IMG-20250109-WA0009[1].jpg" alt="Obra 05 - Instantes de Paz"
+                                class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 05</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“El pequeño Robin te dice: te amo”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Cuando era pequeñito</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Acuarela de instantes memorables</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            A pesar de todo lo que tuviste que pasar, nunca dejaste que mi sonrisa se apagara y me diste
+                            la mejor infancia que un niño podría pedir; esta foto es un vivo recuerdo de eso. Quiero que
+                            sepas que, a pesar de todo lo que pase y de todas las batallas que tengamos que afrontar,
+                            siempre estará en mi corazón el ejemplo de la mamá que, contra todo y contra todos, sacó a
+                            sus hijos adelante y los amó más que a nada en el mundo. ¡Infinitas gracias, mamá!
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-1" data-index="5">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/Pequeños momentos.jpeg" alt="Obra 06 - Retrato Emotivo" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 06</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Eternidad en los momentos”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Victoria y su sushi</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Amor maternal sobre lienzo plateado</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Se dice mucho que la vida se trata de valorar los pequeños momentos y fotos como esta
+                            siempre me lo recordarán: esas noches donde cenábamos y compartíamos pequeños fragmentos del
+                            día a día de cada uno; noches en las que en lo más profundo de nuestro corazón encontrábamos
+                            ese sentimiento al que llamamos hogar, donde tu sonrisa era suficiente para aliviar
+                            cualquier problema.<br><br>Como casi siempre, en lugares de sushi para Victoria.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-1" data-index="6">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/IMG-20250909-WA0010[1].jpg" alt="Obra 07 - Recuerdos Dorados"
+                                class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 07</span>
+                            <span class="plaque-room-badge">Sala I · Raíces</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Espíritu joven”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">9 de Septiembre, 2025</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Pinceladas de cariño puro</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Cuando pienso en todas las decisiones que has tomado en la vida pensando en nosotros, tus
+                            hijos, siempre llega a mi mente una en particular: tus ganas de ser mamá joven a pesar de
+                            tener sueños e ilusiones propias. Es algo que valoro muchísimo y siempre recordaré, en
+                            especial cuando contemplo este tipo de fotos donde sacas a relucir tu espíritu joven y lleno
+                            de vida. Espero que Dios me permita estar mucho tiempo a tu lado y devolverte todo ese amor
+                            inmenso que me das. ¡Te amo!
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="7">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/20250727_205915.jpg" alt="Obra 08 - Noche Mágica" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 08</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Grosero y Bebé, dos hijos más”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Noche en el antejardín</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Luces nocturnas y pelos por montón</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Tu espíritu de madre es tan fuerte que incluso los dos más rebeldes de la casa te aman y
+                            obedecen. Cuidar de Yorky y Owen no ha sido una tarea fácil en lo absoluto, pero siempre
+                            estabas tú para ellos: para regañarlos, cuidarlos y amarlos incondicionalmente a pesar de
+                            ser las mascotas de tus hijos. Siempre encontrabas la forma de hacerlos sentir especiales.
+                            Ellos y nosotros te amamos.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="8">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/20250909_152142.jpg" alt="Obra 09 - Brillo Dorado" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 09</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Siempre seré tu pequeño”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">9 de Septiembre, 2025</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Espontaneidad y alegría sincera</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Esta foto tan espontánea y curiosa siempre me genera la misma reflexión: que a pesar del
+                            paso del tiempo siempre seré tu pequeño, lleno de dudas, risas, enojos, alegrías y
+                            tristezas, donde a pesar de la distancia y el tiempo siempre te recordaré como esa persona
+                            maravillosa que es gigante para mi corazón.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="9">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/20260330_170614.jpg" alt="Obra 10 - Tarde Radiante" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 10</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Belleza natural”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">30 de Marzo, 2026</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Puesta de sol y gratitud profunda</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Inevitable recordarla en esta fecha tan especial: a pesar de lo complicado que es, sacaste
+                            tiempo para venir a visitarme y compartir tardes juntos. Siempre que salgo a caminar veo tu
+                            reflejo en todas las flores y plantas hermosas que me encuentro en el camino,
+                            transmitiéndome una paz tan grande y un amor tan puro como el primer tinto de la mañana. Te
+                            extraño mucho, ma.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="10">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/20260330_171550.jpg" alt="Obra 11 - Paseo en Armonía" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 11</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Siempre a la moda”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Explorando uno de tus mundos</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Aventuras compartidas paso a paso</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Esta foto me hace recordar tus ojos en el momento en que entramos a ese museo de las telas;
+                            ver cómo algo tan normal para mí puede apasionarte de tal manera me hizo rememorar todos los
+                            buenos momentos que he compartido contigo. En esta foto te ves tan elegante y refinada, como
+                            toda una mujer a la moda y dedicada a sus proyectos.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="11">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.05 AM.jpeg"
+                                alt="Obra 12 - Alegría Auténtica" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 12</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“La Sonrisa de Mamá”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Viaje a Medellín</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Luz pura y carcajadas del alma</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            No hay mucho que agregar a esta foto: en ella se ve tu felicidad en su estado más puro,
+                            rememorando personajes de tu infancia y viendo cómo todos tus sueños de recorrer el mundo se
+                            hacen realidad poco a poco, rodeada de los que te amamos. Victoria y papá a tu lado, y yo
+                            desde la distancia de diez horas de vuelo y siete de diferencia horaria enviándote mis más
+                            sinceros deseos de amor, paz y felicidad. Ojalá hubiera podido estar ahí contigo en persona
+                            para darte un abrazo y un beso.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="12">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.05 AM (1).jpeg"
+                                alt="Obra 13 - Encuentro Mágico" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 13</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“VIP en el cine”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Momentos en Madrid</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Técnica mixta de felicidad</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Esta foto representa cómo algo tan simple como ir al cine, con el paso del tiempo, se
+                            convirtió en un espacio especial y único. Allí, viendo Mario y riéndonos del doblaje en
+                            español, fue donde sentí el peso de la decisión de viajar y vivir una vida lejos de ti; pero
+                            a la vez sentí el inmenso amor y orgullo que te genera. Por eso siempre guardaré este
+                            recuerdo en mi corazón.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-2" data-index="13">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.05 AM (2).jpeg"
+                                alt="Obra 14 - Tiempo en Familia" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 14</span>
+                            <span class="plaque-room-badge">Sala II · Travesías</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Reina santa y el dormilón”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Ampliación de la familia</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Abrazos en alta definición</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Siempre es bonito recordar la infancia llena de alegrías y regalos que nos diste. Dentro de
+                            todos los juguetes y dulces, el más especial de todos los regalos fue la llegada de Roko a
+                            nuestras vidas, y Victoria lo demuestra en esta foto.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="14">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.05 AM (3).jpeg"
+                                alt="Obra 15 - La Belleza del Detalle" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 15</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Rockeando desde la cuna”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Recuerdo de un pequeño Robin</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Destellos de cariño incondicional</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Es increíble cómo una foto en broma de hace años pasó a ser una realidad que nos ha llevado
+                            a conciertos inolvidables y experiencias alrededor del mundo. Gracias por acompañar a este
+                            pequeño niño en sus aventuras y en el descubrimiento de quién quiere ser en la vida; gracias
+                            a ti soy el hombre que soy hoy.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="15">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.05 AM (4).jpeg"
+                                alt="Obra 16 - Mirada Cómplice" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 16</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Pequeños pasos de amor a la naturaleza”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Cuidando ovejas en el solar</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Alegría grabada en la memoria</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            De las cosas que más agradezco en la vida es el cómo desde pequeño cultivaste en mí el amor
+                            por la naturaleza y los animales. Me hiciste el niño más feliz del mundo al hacer posible
+                            que explorara y conociera el mundo de los animales y dinosaurios. Creo firmemente que, si no
+                            fuera por eso, hoy no estaría tan interesado académicamente en ser una gran persona en el
+                            mundo científico. Todo gracias a que mamá siempre me dejaba explorar y ser libre en el mundo
+                            que me rodeaba.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="16">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.05 AM (5).jpeg"
+                                alt="Obra 17 - Fuerza y Ternura" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 17</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Up the Irons”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">24 de Noviembre, 2024</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Lo que mejor sé hacer</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Si tengo que decir cuál es el concierto en el que mejor la he pasado contigo,
+                            definitivamente tiene que ser este: ver a Iron Maiden en vivo fue una locura total,
+                            teniéndote a mi lado haciendo lo que normalmente hacemos juntos: reír, cantar, gritar y,
+                            sobre todo, disfrutar de la música que nos apasiona. Sin duda alguna, uno de mis mejores
+                            momentos contigo.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="17">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.06 AM.jpeg" alt="Obra 18 - Reflejos de Amor"
+                                class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 18</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Hay que peinar a la niña”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Cuando Victoria era pequeñita</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Amor de madre, arte mayor</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Es una de las memorias favoritas de mi infancia: recuerdo que siempre me levantaba temprano
+                            para ir al colegio y veía cómo peinabas a mi hermanita mientras los Teletubbies estaban en
+                            la televisión. Aunque no siempre lo hacías con delicadeza absoluta y a veces sentía que la
+                            halabas un poquito fuerte, yo sabía que lo hacías con infinito amor, y por eso lo recuerdo
+                            con tanto cariño al mirar esta foto de Victoria y su peinado.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="18">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/Fav.jpeg" alt="Obra 19 - Unión Indisoluble" class="artwork-img"
+                                loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 19</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“El Lazo que Nos Une”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Toda nuestra vida juntos</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Abrazos sinceros al óleo</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Una de las cosas que más amo de nuestra relación es la conexión tan fuerte que tenemos:
+                            podemos estar juntos por horas y sentir que el tiempo vuela. Amo todos los momentos que
+                            compartimos, ya sean grandes o pequeños, todos son especiales para mí. Por esta razón esta
+                            fue, es y será mi obra favorita: aquí es donde inició todo, yo siendo un pequeño bebé en tus
+                            brazos y tú cuidándome con tanto amor, preparados para enfrentar una vida entera juntos.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="19">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.06 AM (2).jpeg"
+                                alt="Obra 20 - La Belleza de Vivir" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 20</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“Bajo el mar”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">De nuestros primeros viajes</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">Amor esculpido en el tiempo</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Los primeros viajes siempre serán especiales, y en mi mente siempre lo serán por el simple
+                            hecho de haberlos compartido contigo: el viaje a San Andrés, nadando en el mar y tocando las
+                            mantarrayas. Un momento muy especial para toda la familia y la carita de felicidad de
+                            Victoria lo demuestra. Me da mucha risa y ternura verla y rememorar ese momento de asombro
+                            mezclado con alegría.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="exhibit-card" data-room="sala-3" data-index="20">
+                    <div class="artwork-frame">
+                        <div class="artwork-img-container">
+                            <img src="img/WhatsApp Image 2026-09-05 at 7.42.06 AM (3).jpeg"
+                                alt="Obra 21 - Retrato Conmemorativo" class="artwork-img" loading="lazy">
+                            <div class="artwork-overlay">
+                                <span class="artwork-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver en
+                                    Detalle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="museum-plaque">
+                        <div class="plaque-header">
+                            <span class="plaque-catalog-num">Catálogo Nº 21</span>
+                            <span class="plaque-room-badge">Sala III · Amor Infinito</span>
+                        </div>
+
+                        <h2 class="plaque-title">“El venado y Drácula”</h2>
+                        <div class="plaque-metadata">
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Época / Fecha:</span>
+
+                                <span class="plaque-meta-value">Halloween de pequeños</span>
+                            </div>
+                            <div class="plaque-meta-item">
+                                <span class="plaque-meta-label">Técnica:</span>
+
+                                <span class="plaque-meta-value">El mayor de los amores en lienzo</span>
+                            </div>
+                        </div>
+                        <div class="plaque-divider"></div>
+
+                        <p class="plaque-description">
+                            Cerramos la exposición con una pintura que representa nuestra bella infancia gracias a ti,
+                            mamá. No solo fue un gran día de Halloween, sino que se convirtió en una de mis fotos
+                            favoritas que me causa una inmensa ternura y nostalgia al recordar todo el empeño que
+                            siempre ponías en hacernos felices diseñando disfraces únicos para nosotros. Siempre serás
+                            mi heroína y mi inspiración. Solo quería decirte que, a pesar del momento tan difícil por el
+                            que estás pasando, todos estamos a tu lado para apoyarte y salir adelante juntos. Te amo
+                            mucho, ma, y quiero que nunca olvides que estoy a una sola llamada de distancia.
+                        </p>
+                        <div class="plaque-footer">
+                            <span class="plaque-signature">Colección del Corazón</span>
+                            <button class="plaque-expand-action">Ampliar <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+        <section class="tribute-section">
+            <span class="tribute-badge">Epílogo Curatorial</span>
+            <h2 class="tribute-title">Un Homenaje a la Mujer Más Especial</h2>
+
+            <div class="tribute-body-box">
+
+                <p class="tribute-quote">
+                    "Las mejores obras de un museo nos hacen reflexionar, nos inspiran y nos llenan de asombro.
+                    Pero tú, mamá, no estás en una pared fría, vives en cada latido de nuestras vidas, en cada lección
+                    aprendida
+                    y en cada abrazo que nos diste. Gracias por ser nuestra guía, nuestra inspiración y nuestro mayor
+                    orgullo.
+                    ¡Feliz Cumpleaños, ma!"
+                </p>
+                <div class="tribute-author">
+                    <i class="fa-solid fa-heart" style="color: #7c3aed;"></i>
+
+                    <span>Con todo mi amor infinito, tu hijo Robinson</span>
+                </div>
+            </div>
+
+            <button id="btn-tribute-celebrate" class="tribute-btn-heart">
+                <i class="fa-solid fa-gift"></i>
+                <span>¡Toca aquí para celebrar a Mamá!</span>
+            </button>
+        </section>
+
+    </div>
+
+    <div id="art-modal" class="museum-modal" aria-hidden="true" role="dialog">
+        <div class="modal-content-container">
+            <button id="modal-close" class="modal-close-btn" aria-label="Cerrar obra">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <button id="modal-prev" class="modal-nav-prev" aria-label="Obra anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="modal-next" class="modal-nav-next" aria-label="Obra siguiente">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div class="modal-art-view">
+                <img id="modal-img" src="" alt="Obra de arte ampliada">
+            </div>
+
+            <div class="modal-plaque-side">
+                <div class="plaque-header">
+                    <span id="modal-catalog" class="plaque-catalog-num">Catálogo Nº 01</span>
+                    <span id="modal-room" class="plaque-room-badge">Sala de Exposición</span>
+                </div>
+                <h3 id="modal-title" class="plaque-title" style="font-size: 1.5rem; margin: 0.8rem 0;">Título de la Obra
+                </h3>
+                <div class="plaque-metadata">
+                    <div class="plaque-meta-item">
+                        <span class="plaque-meta-label">Época:</span>
+                        <span id="modal-date" class="plaque-meta-value">2024</span>
+                    </div>
+                    <div class="plaque-meta-item">
+                        <span class="plaque-meta-label">Técnica:</span>
+                        <span id="modal-technique" class="plaque-meta-value">Amor en lienzo</span>
+                    </div>
+                </div>
+                <div class="plaque-divider"></div>
+                <p id="modal-desc" class="plaque-description" style="font-size: 0.95rem; line-height: 1.7;">
+                    Descripción detallada de la obra de arte...
+                </p>
+                <div class="plaque-footer" style="margin-top: 2rem;">
+                    <span class="plaque-signature">Museo de Recuerdos Familiares</span>
+                    <span style="color: #7c3aed; font-size: 0.85rem;"><i class="fa-solid fa-star"></i> Obra
+                        Maestra</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-celebration" class="toast-celebration">
+        <i class="fa-solid fa-heart" style="color: #7c3aed; font-size: 1.3rem;"></i>
+        <span id="toast-text">¡Feliz Cumpleaños a la mejor mamá del mundo! 💜🎉</span>
+    </div>
+
+    <footer class="museum-footer">
+        <div class="footer-logo">MUSEO DE RECUERDOS DE MAMÁ</div>
+        <p class="footer-subtitle">Edición Conmemorativa de Cumpleaños · Hecho con todo el amor</p>
+        <p class="footer-credits">Obra y Exposición Privada · Todos los derechos reservados al corazón</p>
+    </footer>
+
+    <script src="animation.js"></script>
+</body>
+
+</html>

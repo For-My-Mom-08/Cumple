@@ -1,0 +1,1344 @@
+/* ==========================================================================
+   MUSEO DE RECUERDOS PARA MAMÁ - HOJA DE ESTILOS PRINCIPAL
+   Paleta predominante: Blanco y Morado (Violeta, Lavanda, Amatista y Blanco Mármol)
+   Diseño: Cédulas museográficas, marcos de galería de arte y responsive mobile-first
+   ========================================================================== */
+
+/* --- Importación de Tipografías de Museo --- */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+/* --- Variables Globales de Diseño y Color --- */
+:root {
+  /* Púrpuras */
+  --purple-950: #120524;
+  --purple-900: #1f0b3b;
+  --purple-850: #2a0f4e;
+  --purple-800: #381566;
+  --purple-700: #552299;
+  --purple-600: #7c3aed;
+  --purple-500: #8b5cf6;
+  --purple-400: #a78bfa;
+  --purple-300: #c4b5fd;
+  --purple-200: #ddd6fe;
+  --purple-100: #ede9fe;
+  --purple-50:  #f5f3ff;
+
+  /* Blancos y Neutrales */
+  --white: #ffffff;
+  --white-marble: #fbfbfe;
+  --white-creamy: #faf7fc;
+  --neutral-100: #f3f0f7;
+  --neutral-200: #e5e0eb;
+  --neutral-300: #d1c7da;
+  --neutral-500: #7d708d;
+  --neutral-700: #493e56;
+  --neutral-900: #1c1524;
+
+  /* Acentos de Galería */
+  --gold-museum: #d4af37;
+  --gold-light: #f3e5ab;
+  --gold-glow: rgba(212, 175, 55, 0.25);
+  --purple-glow: rgba(139, 92, 246, 0.35);
+  --spotlight-glow: radial-gradient(circle, rgba(167, 139, 250, 0.22) 0%, rgba(31, 11, 59, 0) 70%);
+
+  /* Tipografías */
+  --font-serif-title: 'Cinzel', serif;
+  --font-serif-body: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Sombras y Luces */
+  --shadow-sm: 0 2px 8px rgba(18, 5, 36, 0.08);
+  --shadow-md: 0 8px 24px rgba(18, 5, 36, 0.14);
+  --shadow-lg: 0 16px 40px rgba(18, 5, 36, 0.22);
+  --shadow-xl: 0 24px 60px rgba(18, 5, 36, 0.35);
+  --shadow-glow: 0 0 35px var(--purple-glow);
+  --frame-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15);
+
+  /* Transiciones */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Bordes */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+}
+
+/* --- Reseteo y Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--purple-950);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+    radial-gradient(at 90% 80%, rgba(85, 34, 153, 0.18) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(31, 11, 59, 0.8) 0%, rgba(18, 5, 36, 1) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Selección de texto */
+::selection {
+  background: var(--purple-600);
+  color: var(--white);
+}
+
+/* Scrollbar estilizada de museo */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--purple-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--purple-800);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--purple-950);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-600);
+}
+
+/* --- Canvas de Estrellas y Efectos de Fondo --- */
+#ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+/* --- Contenedor Global --- */
+.museum-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ==========================================================================
+   BARRA DE NAVEGACIÓN SUPERIOR (CINTA DE MUSEO)
+   ========================================================================== */
+.museum-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(18, 5, 36, 0.82);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+  transition: var(--transition-normal);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.museum-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.museum-logo-emblem {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--white) 0%, var(--purple-300) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple-900);
+  font-family: var(--font-serif-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.museum-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.museum-title-top {
+  font-family: var(--font-serif-title);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--purple-300);
+}
+
+.museum-title-main {
+  font-family: var(--font-serif-title);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  transition: var(--transition-fast);
+}
+
+.btn-header:hover {
+  background: var(--white);
+  color: var(--purple-950);
+  border-color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+}
+
+.btn-celebrate {
+  background: linear-gradient(135deg, var(--purple-600) 0%, var(--purple-500) 100%);
+  border: 1px solid var(--purple-300);
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+.btn-celebrate:hover {
+  background: linear-gradient(135deg, var(--purple-500) 0%, var(--purple-400) 100%);
+  color: var(--white);
+}
+
+/* ==========================================================================
+   PÓRTICO / HERO SECTION: BIENVENIDA A LA EXPOSICIÓN
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  padding: 4.5rem 1rem 3.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-spotlight {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse at top, rgba(167, 139, 250, 0.25) 0%, rgba(18, 5, 36, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 1.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(221, 214, 254, 0.3);
+  color: var(--purple-200);
+  font-size: 0.75rem;
+  font-family: var(--font-serif-title);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-badge .sparkle {
+  color: var(--gold-museum);
+}
+
+.hero-title {
+  font-family: var(--font-serif-title);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: var(--white);
+  margin-bottom: 1.25rem;
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+}
+
+.hero-title span {
+  display: block;
+  font-family: var(--font-serif-body);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  color: var(--purple-200);
+  margin-top: 0.35rem;
+}
+
+.hero-curatorial-note {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--purple-100);
+  max-width: 680px;
+  margin: 0 auto 2rem;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+/* Placa conmemorativa dorada de entrada */
+.curator-plaque-banner {
+  background: linear-gradient(145deg, #ffffff 0%, #f7f3fb 100%);
+  border: 1px solid var(--purple-200);
+  border-left: 5px solid var(--purple-600);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.75rem;
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(124, 58, 237, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.curator-plaque-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--purple-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple-700);
+  font-size: 1.4rem;
+}
+
+.curator-plaque-text h4 {
+  font-family: var(--font-serif-title);
+  color: var(--purple-950);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.curator-plaque-text p {
+  color: var(--neutral-700);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary-museum {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--purple-950);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35);
+  transition: var(--transition-normal);
+  border: 1px solid var(--white);
+}
+
+.btn-primary-museum:hover {
+  background: var(--purple-100);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.5);
+}
+
+.btn-secondary-museum {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 1px solid rgba(221, 214, 254, 0.3);
+  transition: var(--transition-normal);
+}
+
+.btn-secondary-museum:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--purple-300);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   NAVEGACIÓN DE SALAS / FILTROS CURATORIALES
+   ========================================================================== */
+.gallery-rooms-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.5rem auto 3.5rem;
+  max-width: 900px;
+  padding: 0.5rem;
+  background: rgba(31, 11, 59, 0.6);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.room-filter-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--purple-200);
+  font-family: var(--font-serif-title);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.room-filter-btn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.room-filter-btn.active {
+  background: var(--white);
+  color: var(--purple-950);
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   SECCIONES Y SALAS DE EXPOSICIÓN
+   ========================================================================== */
+.gallery-section {
+  padding-bottom: 5rem;
+}
+
+.room-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.room-header::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
+  margin: 1rem auto 0;
+}
+
+.room-tag {
+  font-family: var(--font-serif-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--purple-300);
+  margin-bottom: 0.5rem;
+}
+
+.room-name {
+  font-family: var(--font-serif-title);
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  font-weight: 700;
+  color: var(--white);
+}
+
+/* ==========================================================================
+   GRID DE OBRAS DE ARTE Y CÉDULAS MUSEOGRÁFICAS
+   ========================================================================== */
+.exhibition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 3rem 2.5rem;
+  margin-bottom: 4rem;
+}
+
+/* Foco de luz sobre la obra (efecto museo) */
+.exhibit-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(31, 11, 59, 0.45);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  transition: var(--transition-normal);
+  overflow: hidden;
+}
+
+.exhibit-card::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, rgba(31, 11, 59, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: var(--transition-normal);
+}
+
+.exhibit-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(221, 214, 254, 0.45);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 58, 237, 0.25);
+}
+
+.exhibit-card:hover::before {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.35) 0%, rgba(31, 11, 59, 0) 70%);
+}
+
+/* --- Marco del Cuadro de Museo --- */
+.artwork-frame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--white);
+  padding: 14px; /* Efecto Paspartú (Borde blanco mate de museo) */
+  border-radius: var(--radius-sm);
+  box-shadow: var(--frame-shadow);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  border: 1px solid rgba(221, 214, 254, 0.6);
+}
+
+.artwork-frame::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+.artwork-img-container {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #0d0417;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artwork-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.artwork-frame:hover .artwork-img {
+  transform: scale(1.05);
+}
+
+/* Capa de iluminación interactiva al pasar el cursor */
+.artwork-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(18, 5, 36, 0.75) 0%, rgba(18, 5, 36, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%);
+  opacity: 0;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artwork-frame:hover .artwork-overlay {
+  opacity: 1;
+}
+
+.artwork-zoom-btn {
+  background: var(--white);
+  color: var(--purple-950);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(10px);
+  transition: var(--transition-normal);
+}
+
+.artwork-frame:hover .artwork-zoom-btn {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   CÉDULA MUSEOGRÁFICA (CAJA DE DESCRIPCIÓN DE OBRA DE MUSEO)
+   ========================================================================== */
+.museum-plaque {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.75rem;
+  background: var(--white);
+  color: var(--neutral-900);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 1.6rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-200);
+  border-top: 3px solid var(--purple-600);
+  transition: var(--transition-normal);
+}
+
+/* Efecto de remaches de placa de museo en las esquinas */
+.museum-plaque::before,
+.museum-plaque::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple-300);
+  border: 1px solid var(--purple-700);
+}
+
+.museum-plaque::before {
+  top: 8px;
+  right: 10px;
+}
+
+.museum-plaque::after {
+  bottom: 8px;
+  right: 10px;
+}
+
+.plaque-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--neutral-200);
+  padding-bottom: 0.4rem;
+}
+
+.plaque-catalog-num {
+  font-family: var(--font-serif-title);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--purple-700);
+  text-transform: uppercase;
+}
+
+.plaque-room-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--neutral-500);
+  letter-spacing: 0.05em;
+}
+
+.plaque-title {
+  font-family: var(--font-serif-title);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--purple-950);
+  line-height: 1.25;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+.plaque-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.8rem;
+}
+
+.plaque-meta-item {
+  display: flex;
+  align-items: baseline;
+  color: var(--neutral-700);
+}
+
+.plaque-meta-label {
+  font-style: italic;
+  font-family: var(--font-serif-body);
+  color: var(--neutral-500);
+  width: 85px;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+}
+
+.plaque-meta-value {
+  font-weight: 600;
+  color: var(--purple-900);
+}
+
+.plaque-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--neutral-200);
+  margin: 0.75rem 0;
+}
+
+/* Texto de la obra (Lorem Ipsum editable) */
+.plaque-description {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--neutral-700);
+  text-align: justify;
+  font-weight: 400;
+}
+
+.plaque-footer {
+  margin-top: 1rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plaque-signature {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--purple-700);
+}
+
+.plaque-expand-action {
+  background: transparent;
+  border: none;
+  color: var(--purple-600);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: var(--transition-fast);
+}
+
+.plaque-expand-action:hover {
+  color: var(--purple-900);
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
+   SECCIÓN DEDICATORIA FINAL / LIBRO DE VISITAS DE MAMÁ
+   ========================================================================== */
+.tribute-section {
+  position: relative;
+  background: linear-gradient(135deg, rgba(42, 15, 78, 0.8) 0%, rgba(20, 6, 40, 0.95) 100%);
+  border: 1px solid rgba(221, 214, 254, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 3.5rem 2rem;
+  margin: 4rem auto;
+  max-width: 900px;
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+}
+
+.tribute-section::before {
+  content: '“';
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  font-family: var(--font-serif-body);
+  font-size: 7rem;
+  line-height: 1;
+  color: rgba(221, 214, 254, 0.1);
+  pointer-events: none;
+}
+
+.tribute-badge {
+  display: inline-block;
+  font-family: var(--font-serif-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--purple-300);
+  margin-bottom: 1rem;
+}
+
+.tribute-title {
+  font-family: var(--font-serif-title);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.tribute-body-box {
+  background: var(--white);
+  color: var(--neutral-900);
+  padding: 2.25rem 2rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+  max-width: 720px;
+  margin: 0 auto 2rem;
+  border-left: 5px solid var(--purple-600);
+  position: relative;
+}
+
+.tribute-quote {
+  font-family: var(--font-serif-body);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--neutral-900);
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+
+.tribute-author {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--purple-900);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tribute-btn-heart {
+  background: linear-gradient(135deg, var(--purple-600) 0%, var(--purple-500) 100%);
+  border: 1px solid var(--purple-300);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+  transition: var(--transition-normal);
+}
+
+.tribute-btn-heart:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6);
+  background: linear-gradient(135deg, var(--purple-500) 0%, var(--purple-400) 100%);
+}
+
+/* ==========================================================================
+   PIE DE PÁGINA DEL MUSEO
+   ========================================================================== */
+.museum-footer {
+  border-top: 1px solid rgba(167, 139, 250, 0.2);
+  padding: 3rem 1.5rem 4rem;
+  text-align: center;
+  background: rgba(18, 5, 36, 0.95);
+  margin-top: 4rem;
+}
+
+.footer-logo {
+  font-family: var(--font-serif-title);
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.footer-subtitle {
+  color: var(--purple-300);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-credits {
+  font-size: 0.8rem;
+  color: var(--neutral-500);
+}
+
+/* ==========================================================================
+   MODAL / LIGHTBOX DE MUSEO (VISTA DETALLADA EN ALTA RESOLUCIÓN)
+   ========================================================================== */
+.museum-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 3, 20, 0.93);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.museum-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content-container {
+  position: relative;
+  background: var(--purple-900);
+  border: 1px solid rgba(221, 214, 254, 0.3);
+  border-radius: var(--radius-lg);
+  max-width: 1100px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(124, 58, 237, 0.3);
+  transform: scale(0.95);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.museum-modal.active .modal-content-container {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: var(--white);
+  color: var(--purple-950);
+  transform: rotate(90deg);
+}
+
+.modal-art-view {
+  flex: 1.4;
+  background: #090212;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.modal-art-view img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border: 8px solid var(--white);
+}
+
+.modal-plaque-side {
+  flex: 1;
+  background: var(--white);
+  color: var(--neutral-900);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.modal-nav-prev,
+.modal-nav-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: var(--transition-fast);
+}
+
+.modal-nav-prev { left: 1rem; }
+.modal-nav-next { right: 1rem; }
+
+.modal-nav-prev:hover,
+.modal-nav-next:hover {
+  background: var(--white);
+  color: var(--purple-950);
+}
+
+/* ==========================================================================
+   TOAST DE CONFETI / MENSAJE DE FELICITACIÓN
+   ========================================================================== */
+.toast-celebration {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--white);
+  color: var(--purple-950);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  z-index: 1500;
+  border-left: 5px solid var(--purple-600);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.toast-celebration.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES - RESPONSIVE DESIGN DE ALTA PRECISIÓN
+   ========================================================================== */
+
+/* --- Pantallas Grandes / Laptops (min-width: 1200px) --- */
+@media (min-width: 1200px) {
+  .exhibition-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem 2.5rem;
+  }
+}
+
+/* --- Pantallas Medianas / Tablets en Horizontal (992px a 1199px) --- */
+@media (max-width: 1199px) and (min-width: 769px) {
+  .exhibition-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 2rem;
+  }
+  .modal-content-container {
+    max-height: 85vh;
+  }
+}
+
+/* --- Tablets y Móviles Grandes (max-width: 768px) --- */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0.8rem 1rem;
+  }
+
+  .museum-title-top {
+    font-size: 0.55rem;
+  }
+
+  .museum-title-main {
+    font-size: 0.95rem;
+  }
+
+  .btn-header span {
+    display: none; /* Dejar solo iconos en barra si el espacio es reducido */
+  }
+
+  .btn-header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .hero-section {
+    padding: 3rem 0.5rem 2.5rem;
+  }
+
+  .curator-plaque-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.8rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .curator-plaque-icon {
+    margin: 0 auto;
+  }
+
+  .gallery-rooms-nav {
+    border-radius: var(--radius-md);
+    gap: 0.4rem;
+  }
+
+  .room-filter-btn {
+    font-size: 0.72rem;
+    padding: 0.5rem 0.9rem;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .exhibition-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .exhibit-card {
+    padding: 1.25rem;
+  }
+
+  .artwork-img-container {
+    height: 300px;
+  }
+
+  .museum-plaque {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .plaque-title {
+    font-size: 1.15rem;
+  }
+
+  /* Modal en móvil: se apila verticalmente */
+  .modal-content-container {
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-art-view {
+    padding: 1.25rem;
+    flex: none;
+    height: 280px;
+  }
+
+  .modal-art-view img {
+    max-height: 250px;
+    border-width: 4px;
+  }
+
+  .modal-plaque-side {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .modal-nav-prev { left: 0.5rem; }
+  .modal-nav-next { right: 0.5rem; }
+
+  .tribute-section {
+    padding: 2.5rem 1.25rem;
+    margin: 2.5rem 0;
+  }
+
+  .tribute-body-box {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+/* --- Smartphones Estándar y Pequeños (max-width: 480px) --- */
+@media (max-width: 480px) {
+  .museum-wrapper {
+    padding: 0 0.75rem;
+  }
+
+  .hero-badge {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.9rem;
+    letter-spacing: 0.15em;
+  }
+
+  .hero-title {
+    font-size: 1.9rem;
+  }
+
+  .hero-title span {
+    font-size: 1.25rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary-museum,
+  .btn-secondary-museum {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .artwork-img-container {
+    height: 250px;
+  }
+
+  .artwork-frame {
+    padding: 10px; /* Paspartú compacto */
+  }
+
+  .museum-plaque {
+    padding: 1.1rem;
+  }
+
+  .plaque-meta-item {
+    font-size: 0.75rem;
+  }
+
+  .plaque-meta-label {
+    width: 75px;
+  }
+
+  .plaque-description {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    text-align: left;
+  }
+
+  .toast-celebration {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    font-size: 0.85rem;
+    justify-content: center;
+  }
+}
+
+/* --- Dispositivos Ultra Compactos (max-width: 360px) --- */
+@media (max-width: 360px) {
+  .artwork-img-container {
+    height: 210px;
+  }
+
+  .plaque-title {
+    font-size: 1.05rem;
+  }
+
+  .room-filter-btn {
+    font-size: 0.65rem;
+    padding: 0.45rem 0.6rem;
+  }
+}
+
+/* ==========================================================================
+   ELEMENTOS DECORATIVOS: GIRASOLES (FLOR FAVORITA DE MAMÁ 🌻)
+   ========================================================================== */
+.sunflower-icon {
+  display: inline-block;
+  font-size: 1.15rem;
+  line-height: 1;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.7));
+  animation: sunflowerSway 4s ease-in-out infinite;
+}
+
+.museum-logo-emblem {
+  position: relative;
+}
+
+.emblem-sunflower {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  font-size: 0.85rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  animation: sunflowerSway 5s ease-in-out infinite;
+}
+
+.plaque-sunflower-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: default;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  filter: drop-shadow(0 1px 3px rgba(217, 119, 6, 0.35));
+}
+
+.plaque-sunflower-pin:hover {
+  transform: scale(1.35) rotate(18deg);
+  filter: drop-shadow(0 2px 10px rgba(251, 191, 36, 0.85));
+}
+
+@keyframes sunflowerSway {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.1);
+  }
+}
