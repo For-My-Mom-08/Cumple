@@ -340,112 +340,182 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-   * 6. SINTETIZADOR AMBIENTAL DE PIANO MELANCÓLICO (WEB AUDIO API NATIVO)
-   *    Composición íntima y nostálgica en Re menor (estilo Felt Piano / Ludovico Einaudi)
+   * 6. ORQUESTA AMBIENTAL DE MUSEO (WEB AUDIO API NATIVO)
+   *    Cuerdas de cámara, cello, reverb de sala y armonías clásicas
+   *    Inspirado en Debussy, Erik Satie y la música de salas del Louvre
    * -------------------------------------------------------------------------- */
   const audioBtn = document.getElementById('btn-audio-toggle');
   let audioCtx = null;
+  let reverbNode = null;
+  let masterBus = null;
   let isPlayingMusic = false;
   let musicTimer = null;
-  let currentMeasure = 0;
+  let currentChord = 0;
 
-  // Secuencia armónica melancólica en Re menor (Dm -> Bb -> F -> C -> Gm -> Dm/A -> Asus4 -> Dm)
-  // Cada compás cuenta con un bajo cálido y notas arpegiadas lentas y expresivas (Hz)
-  const melancholicProgression = [
-    // 1. Re menor (Dm): Nostalgia y memoria profunda
-    { bass: 146.83, melody: [220.00, 293.66, 349.23, 440.00, 349.23, 293.66] },
-    // 2. Si bemol Mayor (Bb): Calidez y ternura agridulce
-    { bass: 116.54, melody: [174.61, 233.08, 293.66, 349.23, 293.66, 233.08] },
-    // 3. Fa Mayor (F): Recuerdos de momentos luminosos
-    { bass: 130.81, melody: [174.61, 261.63, 349.23, 440.00, 349.23, 261.63] },
-    // 4. Do Mayor (C): Serenidad y gratitud
-    { bass: 130.81, melody: [196.00, 261.63, 329.63, 392.00, 329.63, 261.63] },
-    // 5. Sol menor (Gm): Sentimiento íntimo y reflexivo
-    { bass: 98.00,  melody: [146.83, 196.00, 233.08, 293.66, 233.08, 196.00] },
-    // 6. Re menor con bajo en La (Dm/A)
-    { bass: 110.00, melody: [146.83, 220.00, 293.66, 349.23, 293.66, 220.00] },
-    // 7. La suspendido (Asus4 / A7): Tensión emotiva y suspiro
-    { bass: 110.00, melody: [164.81, 220.00, 293.66, 370.00, 293.66, 220.00] },
-    // 8. Re menor con 7ma (Dm7): Conclusión que resuena en el alma
-    { bass: 146.83, melody: [220.00, 293.66, 349.23, 440.00, 523.25, 440.00] }
+  /**
+   * Progresión orquestal lenta en Re menor / Fa Mayor
+   * Cada acorde es un pad de cuerdas sostenido (notas simultáneas, no arpegios)
+   * duración de cada acorde: ~8 segundos, con crossfade suave
+   *
+   * Acordes clásicos: Dm – Bb – Gm – Am – F – C – Am – Dm (cadencia perfecta)
+   */
+  const orchestralChords = [
+    // Re menor (Dm) — gravedad y emoción
+    { cello: 73.42,  strings: [146.83, 220.00, 261.63, 293.66, 349.23] },
+    // Si bemol Mayor (Bb) — calidez dorada
+    { cello: 58.27,  strings: [116.54, 174.61, 233.08, 261.63, 293.66] },
+    // Sol menor (Gm) — reflexión íntima
+    { cello: 49.00,  strings: [98.00,  146.83, 196.00, 233.08, 261.63] },
+    // La menor (Am) — tensión expectante
+    { cello: 55.00,  strings: [110.00, 164.81, 220.00, 261.63, 329.63] },
+    // Fa Mayor (F) — luminosidad cálida
+    { cello: 65.41,  strings: [130.81, 174.61, 196.00, 261.63, 349.23] },
+    // Do Mayor (C) — serenidad solemne
+    { cello: 65.41,  strings: [130.81, 196.00, 261.63, 329.63, 392.00] },
+    // La menor (Am7) — nostalgia suave
+    { cello: 55.00,  strings: [110.00, 164.81, 220.00, 261.63, 293.66] },
+    // Re menor (Dm) — regreso y conclusión
+    { cello: 73.42,  strings: [146.83, 220.00, 261.63, 293.66, 440.00] },
   ];
 
-  function playPianoNote(freq, timeOffset = 0, isBass = false, duration = 3.6) {
-    if (!audioCtx) return;
-    const startTime = audioCtx.currentTime + timeOffset;
+  /** Crea un reverb sintético de sala de conciertos usando un bucle de delay */
+  function buildReverb(ctx) {
+    const convolver = ctx.createConvolver();
+    const rate = ctx.sampleRate;
+    const duration = 3.5; // segundos de cola de reverb
+    const decay = 3.0;
+    const length = Math.floor(rate * duration);
+    const impulse = ctx.createBuffer(2, length, rate);
 
-    try {
-      // Oscilador primario: onda triangular para el cuerpo acústico suave
+    for (let ch = 0; ch < 2; ch++) {
+      const channelData = impulse.getChannelData(ch);
+      for (let i = 0; i < length; i++) {
+        // Ruido blanco que decae exponencialmente (sala grande)
+        channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+      }
+    }
+    convolver.buffer = impulse;
+    return convolver;
+  }
+
+  /**
+   * Genera una voz de cuerda orquestal realista para una frecuencia dada.
+   * Usa múltiples osciladores ligeramente desafinados (chorus ensemble)
+   * y vibrato lento para simular una sección de cuerdas real.
+   */
+  function createStringVoice(freq, startTime, duration, peakGain, isCello = false) {
+    if (!audioCtx || !masterBus) return;
+
+    const numVoices = isCello ? 2 : 4; // Cuerdas: 4 violines; Cello: 2
+    const detuneSpread = isCello ? 4 : 8; // Cents de desafinación
+
+    const chordGain = audioCtx.createGain();
+    chordGain.gain.setValueAtTime(0.0001, startTime);
+    // Ataque lento tipo arco (bow attack): ~1.2s para cuerdas, ~0.8s para cello
+    chordGain.gain.linearRampToValueAtTime(peakGain, startTime + (isCello ? 0.8 : 1.4));
+    // Sustain pleno
+    chordGain.gain.setValueAtTime(peakGain, startTime + duration - 2.0);
+    // Decaimiento suave al final
+    chordGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+    chordGain.connect(masterBus);
+
+    for (let v = 0; v < numVoices; v++) {
       const osc = audioCtx.createOscillator();
-      osc.type = isBass ? 'sine' : 'triangle';
+      osc.type = isCello ? 'sawtooth' : 'sawtooth';
+
+      // Desafinar cada voz ligeramente para simular un ensemble
+      const detuneOffset = (v / (numVoices - 1) - 0.5) * detuneSpread;
       osc.frequency.setValueAtTime(freq, startTime);
+      osc.detune.setValueAtTime(detuneOffset, startTime);
 
-      // Oscilador secundario: armónico para dar profundidad de cuerda
-      const subOsc = audioCtx.createOscillator();
-      subOsc.type = 'sine';
-      subOsc.frequency.setValueAtTime(freq * (isBass ? 2 : 0.5), startTime);
+      // Vibrato lento (LFO ~4.5 Hz, profundidad 5 cents)
+      const lfo = audioCtx.createOscillator();
+      lfo.type = 'sine';
+      lfo.frequency.setValueAtTime(isCello ? 3.8 : 4.5, startTime);
+      const lfoGain = audioCtx.createGain();
+      lfoGain.gain.setValueAtTime(0, startTime);
+      // El vibrato entra gradualmente (como un violinista real)
+      lfoGain.gain.linearRampToValueAtTime(isCello ? 3 : 5, startTime + 1.5);
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc.detune);
 
-      // Filtro Biquad Pasa-Bajas (emula el fieltro de un piano íntimo de estudio)
+      // Filtro para suavizar el timbre (cuerdas no son brillantes en sala)
       const filter = audioCtx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(isBass ? 320 : 750, startTime);
-      filter.Q.setValueAtTime(1.3, startTime);
+      filter.frequency.setValueAtTime(isCello ? 500 : 1800, startTime);
+      filter.Q.setValueAtTime(0.7, startTime);
 
-      // Nodos de ganancia y volumen
-      const gain = audioCtx.createGain();
-      const subGain = audioCtx.createGain();
-      const masterGain = audioCtx.createGain();
+      const voiceGain = audioCtx.createGain();
+      voiceGain.gain.setValueAtTime(1.0 / numVoices, startTime);
 
-      const peakVolume = isBass ? 0.085 : 0.052;
-
-      // Curva de volumen: ataque delicado y decaimiento largo y emotivo
-      masterGain.gain.setValueAtTime(0.0001, startTime);
-      masterGain.gain.linearRampToValueAtTime(peakVolume, startTime + (isBass ? 0.05 : 0.025));
-      masterGain.gain.exponentialRampToValueAtTime(peakVolume * 0.4, startTime + 0.6);
-      masterGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-
-      subGain.gain.setValueAtTime(0.02, startTime);
-
-      // Encadenar audio
-      osc.connect(gain);
-      subOsc.connect(subGain);
-      gain.connect(filter);
-      subGain.connect(filter);
-      filter.connect(masterGain);
-      masterGain.connect(audioCtx.destination);
+      osc.connect(filter);
+      filter.connect(voiceGain);
+      voiceGain.connect(chordGain);
 
       osc.start(startTime);
-      subOsc.start(startTime);
-      osc.stop(startTime + duration + 0.1);
-      subOsc.stop(startTime + duration + 0.1);
-    } catch (e) {
-      console.warn('Audio warning:', e);
+      lfo.start(startTime);
+      osc.stop(startTime + duration + 0.2);
+      lfo.stop(startTime + duration + 0.2);
     }
   }
 
-  function playMelancholicPhrase() {
+  /** Reproduce un acorde orquestal completo (cello + pad de cuerdas) */
+  function playOrchestraChord() {
     if (!isPlayingMusic || !audioCtx) return;
 
-    const measure = melancholicProgression[currentMeasure % melancholicProgression.length];
-    currentMeasure++;
+    const chord = orchestralChords[currentChord % orchestralChords.length];
+    currentChord++;
 
-    // Nota de bajo grave y sostenida
-    playPianoNote(measure.bass, 0, true, 4.2);
+    const now = audioCtx.currentTime;
+    const chordDuration = 9.5; // segundos por acorde (largo y sostenido)
+    const overlapTime = 1.8;   // crossfade entre acordes
 
-    // Arpegio nostálgico con tempo lento y contemplativo
-    const noteSpacing = 0.52;
-    measure.melody.forEach((noteFreq, idx) => {
-      playPianoNote(noteFreq, idx * noteSpacing, false, 3.4);
+    // Voz de Cello (bajo orquestal profundo)
+    createStringVoice(chord.cello, now, chordDuration, 0.10, true);
+    // Octava superior del cello para cuerpo
+    createStringVoice(chord.cello * 2, now, chordDuration, 0.06, true);
+
+    // Sección de cuerdas (violines / violas) — pad coral
+    chord.strings.forEach((freq, i) => {
+      // Pequeño offset de entrada escalonado (como en una orquesta real)
+      const entryDelay = i * 0.12;
+      createStringVoice(freq, now + entryDelay, chordDuration - entryDelay, 0.038, false);
     });
 
-    // Programar el siguiente compás tras 3.3 segundos
-    musicTimer = setTimeout(playMelancholicPhrase, 3300);
+    // Programar el siguiente acorde con overlap suave
+    musicTimer = setTimeout(playOrchestraChord, (chordDuration - overlapTime) * 1000);
+  }
+
+  function initMuseumAudio() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return false;
+    audioCtx = new AudioContextClass();
+
+    // Bus maestro con ganancia de salida
+    masterBus = audioCtx.createGain();
+    masterBus.gain.setValueAtTime(0.72, audioCtx.currentTime);
+
+    // Reverb de sala de conciertos
+    reverbNode = buildReverb(audioCtx);
+
+    // Mezcla seca/mojada: 55% reverb, 45% seco
+    const dryGain = audioCtx.createGain();
+    const wetGain = audioCtx.createGain();
+    dryGain.gain.setValueAtTime(0.45, audioCtx.currentTime);
+    wetGain.gain.setValueAtTime(0.55, audioCtx.currentTime);
+
+    masterBus.connect(dryGain);
+    masterBus.connect(reverbNode);
+    reverbNode.connect(wetGain);
+    dryGain.connect(audioCtx.destination);
+    wetGain.connect(audioCtx.destination);
+
+    return true;
   }
 
   function toggleAmbientMusic() {
     if (!audioCtx) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContextClass();
+      if (!initMuseumAudio()) return;
     }
 
     if (audioCtx.state === 'suspended') {
@@ -456,11 +526,10 @@ document.addEventListener('DOMContentLoaded', () => {
       isPlayingMusic = true;
       if (audioBtn) {
         audioBtn.classList.add('btn-celebrate');
-        audioBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Música Melancólica</span>';
+        audioBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Orquesta de Museo</span>';
       }
-
-      currentMeasure = 0;
-      playMelancholicPhrase();
+      currentChord = 0;
+      playOrchestraChord();
 
     } else {
       isPlayingMusic = false;
