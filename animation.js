@@ -340,9 +340,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-   * 6. ORQUESTA AMBIENTAL DE MUSEO (WEB AUDIO API NATIVO)
-   *    Cuerdas de cámara, cello, reverb de sala y armonías clásicas
-   *    Inspirado en Debussy, Erik Satie y la música de salas del Louvre
+   * 6. AMBIENTE SONORO TRANQUILO (WEB AUDIO API)
+   *    Pads etéreos con ondas sinusoidales, reverb largo y progresión lenta
+   *    Inspirado en Gymnopédie de Satie y música ambient de Brian Eno
    * -------------------------------------------------------------------------- */
   const audioBtn = document.getElementById('btn-audio-toggle');
   let audioCtx = null;
@@ -353,44 +353,43 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentChord = 0;
 
   /**
-   * Progresión orquestal lenta en Re menor / Fa Mayor
-   * Cada acorde es un pad de cuerdas sostenido (notas simultáneas, no arpegios)
-   * duración de cada acorde: ~8 segundos, con crossfade suave
+   * Progresión ambient ultra-suave en Re Mayor / Si menor
+   * Cada acorde flota ~12 segundos con crossfade de 3s
+   * Sonido etéreo tipo campanas de cristal y brisa de piano
    *
-   * Acordes clásicos: Dm – Bb – Gm – Am – F – C – Am – Dm (cadencia perfecta)
+   * Acordes: Dmaj7 – Gmaj7 – Bm7 – F#m7 – Emaj7 – Amaj7 – Bm7 – Dmaj7
    */
-  const orchestralChords = [
-    // Re menor (Dm) — gravedad y emoción
-    { cello: 73.42,  strings: [146.83, 220.00, 261.63, 293.66, 349.23] },
-    // Si bemol Mayor (Bb) — calidez dorada
-    { cello: 58.27,  strings: [116.54, 174.61, 233.08, 261.63, 293.66] },
-    // Sol menor (Gm) — reflexión íntima
-    { cello: 49.00,  strings: [98.00,  146.83, 196.00, 233.08, 261.63] },
-    // La menor (Am) — tensión expectante
-    { cello: 55.00,  strings: [110.00, 164.81, 220.00, 261.63, 329.63] },
-    // Fa Mayor (F) — luminosidad cálida
-    { cello: 65.41,  strings: [130.81, 174.61, 196.00, 261.63, 349.23] },
-    // Do Mayor (C) — serenidad solemne
-    { cello: 65.41,  strings: [130.81, 196.00, 261.63, 329.63, 392.00] },
-    // La menor (Am7) — nostalgia suave
-    { cello: 55.00,  strings: [110.00, 164.81, 220.00, 261.63, 293.66] },
-    // Re menor (Dm) — regreso y conclusión
-    { cello: 73.42,  strings: [146.83, 220.00, 261.63, 293.66, 440.00] },
+  const ambientChords = [
+    // Re Mayor 7 (Dmaj7) — amanecer dorado
+    { bass: 73.42,  pads: [146.83, 185.00, 220.00, 277.18] },
+    // Sol Mayor 7 (Gmaj7) — brisa cálida
+    { bass: 98.00,  pads: [196.00, 246.94, 293.66, 369.99] },
+    // Si menor 7 (Bm7) — melancolía dulce
+    { bass: 61.74,  pads: [123.47, 146.83, 185.00, 220.00] },
+    // Fa# menor 7 (F#m7) — susurro nocturno
+    { bass: 46.25,  pads: [92.50, 110.00, 138.59, 164.81] },
+    // Mi Mayor 7 (Emaj7) — luz de luna
+    { bass: 82.41,  pads: [164.81, 207.65, 246.94, 311.13] },
+    // La Mayor 7 (Amaj7) — paz profunda
+    { bass: 55.00,  pads: [110.00, 138.59, 164.81, 207.65] },
+    // Si menor 7 (Bm7) — reflexión serena
+    { bass: 61.74,  pads: [123.47, 146.83, 185.00, 233.08] },
+    // Re Mayor 7 (Dmaj7) — regreso al hogar
+    { bass: 73.42,  pads: [146.83, 185.00, 220.00, 293.66] },
   ];
 
-  /** Crea un reverb sintético de sala de conciertos usando un bucle de delay */
+  /** Reverb largo y difuso — simula una catedral o espacio abierto */
   function buildReverb(ctx) {
     const convolver = ctx.createConvolver();
     const rate = ctx.sampleRate;
-    const duration = 3.5; // segundos de cola de reverb
-    const decay = 3.0;
+    const duration = 5.0; // cola de reverb larga y etérea
+    const decay = 2.2;    // decaimiento más lento = más difuso
     const length = Math.floor(rate * duration);
     const impulse = ctx.createBuffer(2, length, rate);
 
     for (let ch = 0; ch < 2; ch++) {
       const channelData = impulse.getChannelData(ch);
       for (let i = 0; i < length; i++) {
-        // Ruido blanco que decae exponencialmente (sala grande)
         channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
       }
     }
@@ -399,91 +398,87 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Genera una voz de cuerda orquestal realista para una frecuencia dada.
-   * Usa múltiples osciladores ligeramente desafinados (chorus ensemble)
-   * y vibrato lento para simular una sección de cuerdas real.
+   * Genera una voz sinusoidal suave y etérea.
+   * Usa ondas seno puras con vibrato muy lento y sutil,
+   * filtro pasa-bajos agresivo para un sonido cálido tipo cristal.
    */
-  function createStringVoice(freq, startTime, duration, peakGain, isCello = false) {
+  function createPadVoice(freq, startTime, duration, peakGain, isBass = false) {
     if (!audioCtx || !masterBus) return;
 
-    const numVoices = isCello ? 2 : 4; // Cuerdas: 4 violines; Cello: 2
-    const detuneSpread = isCello ? 4 : 8; // Cents de desafinación
+    const numVoices = isBass ? 2 : 3;
+    const detuneSpread = isBass ? 2 : 4; // Muy sutil
 
-    const chordGain = audioCtx.createGain();
-    chordGain.gain.setValueAtTime(0.0001, startTime);
-    // Ataque lento tipo arco (bow attack): ~1.2s para cuerdas, ~0.8s para cello
-    chordGain.gain.linearRampToValueAtTime(peakGain, startTime + (isCello ? 0.8 : 1.4));
-    // Sustain pleno
-    chordGain.gain.setValueAtTime(peakGain, startTime + duration - 2.0);
-    // Decaimiento suave al final
-    chordGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-    chordGain.connect(masterBus);
+    const voiceEnvelope = audioCtx.createGain();
+    voiceEnvelope.gain.setValueAtTime(0.0001, startTime);
+    // Ataque muy lento: 3s para pads, 2s para bajo — como una respiración
+    voiceEnvelope.gain.linearRampToValueAtTime(peakGain, startTime + (isBass ? 2.0 : 3.0));
+    // Sustain largo y estable
+    voiceEnvelope.gain.setValueAtTime(peakGain, startTime + duration - 3.5);
+    // Release muy suave — se desvanece como un eco
+    voiceEnvelope.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+    voiceEnvelope.connect(masterBus);
 
     for (let v = 0; v < numVoices; v++) {
       const osc = audioCtx.createOscillator();
-      osc.type = isCello ? 'sawtooth' : 'sawtooth';
+      // Ondas seno puras — el sonido más suave posible
+      osc.type = 'sine';
 
-      // Desafinar cada voz ligeramente para simular un ensemble
-      const detuneOffset = (v / (numVoices - 1) - 0.5) * detuneSpread;
+      const detuneOffset = numVoices > 1 ? (v / (numVoices - 1) - 0.5) * detuneSpread : 0;
       osc.frequency.setValueAtTime(freq, startTime);
       osc.detune.setValueAtTime(detuneOffset, startTime);
 
-      // Vibrato lento (LFO ~4.5 Hz, profundidad 5 cents)
+      // Vibrato ultra-lento y sutil (LFO ~0.8 Hz, profundidad 1.5 cents)
       const lfo = audioCtx.createOscillator();
       lfo.type = 'sine';
-      lfo.frequency.setValueAtTime(isCello ? 3.8 : 4.5, startTime);
+      lfo.frequency.setValueAtTime(isBass ? 0.5 : 0.8, startTime);
       const lfoGain = audioCtx.createGain();
       lfoGain.gain.setValueAtTime(0, startTime);
-      // El vibrato entra gradualmente (como un violinista real)
-      lfoGain.gain.linearRampToValueAtTime(isCello ? 3 : 5, startTime + 1.5);
+      lfoGain.gain.linearRampToValueAtTime(isBass ? 1 : 1.5, startTime + 3.0);
       lfo.connect(lfoGain);
       lfoGain.connect(osc.detune);
 
-      // Filtro para suavizar el timbre (cuerdas no son brillantes en sala)
+      // Filtro pasa-bajos suave — quita todo brillo, deja solo calidez
       const filter = audioCtx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(isCello ? 500 : 1800, startTime);
-      filter.Q.setValueAtTime(0.7, startTime);
+      filter.frequency.setValueAtTime(isBass ? 300 : 900, startTime);
+      filter.Q.setValueAtTime(0.3, startTime);
 
       const voiceGain = audioCtx.createGain();
       voiceGain.gain.setValueAtTime(1.0 / numVoices, startTime);
 
       osc.connect(filter);
       filter.connect(voiceGain);
-      voiceGain.connect(chordGain);
+      voiceGain.connect(voiceEnvelope);
 
       osc.start(startTime);
       lfo.start(startTime);
-      osc.stop(startTime + duration + 0.2);
-      lfo.stop(startTime + duration + 0.2);
+      osc.stop(startTime + duration + 0.5);
+      lfo.stop(startTime + duration + 0.5);
     }
   }
 
-  /** Reproduce un acorde orquestal completo (cello + pad de cuerdas) */
-  function playOrchestraChord() {
+  /** Reproduce un acorde ambient completo (bajo + pads etéreos) */
+  function playAmbientChord() {
     if (!isPlayingMusic || !audioCtx) return;
 
-    const chord = orchestralChords[currentChord % orchestralChords.length];
+    const chord = ambientChords[currentChord % ambientChords.length];
     currentChord++;
 
     const now = audioCtx.currentTime;
-    const chordDuration = 9.5; // segundos por acorde (largo y sostenido)
-    const overlapTime = 1.8;   // crossfade entre acordes
+    const chordDuration = 12.0; // Más largo — cada acorde respira
+    const overlapTime = 3.0;    // Crossfade generoso entre acordes
 
-    // Voz de Cello (bajo orquestal profundo)
-    createStringVoice(chord.cello, now, chordDuration, 0.10, true);
-    // Octava superior del cello para cuerpo
-    createStringVoice(chord.cello * 2, now, chordDuration, 0.06, true);
+    // Bajo profundo y suave — como un colchón
+    createPadVoice(chord.bass, now, chordDuration, 0.06, true);
 
-    // Sección de cuerdas (violines / violas) — pad coral
-    chord.strings.forEach((freq, i) => {
-      // Pequeño offset de entrada escalonado (como en una orquesta real)
-      const entryDelay = i * 0.12;
-      createStringVoice(freq, now + entryDelay, chordDuration - entryDelay, 0.038, false);
+    // Pads etéreos — entran escalonados como gotas de agua
+    chord.pads.forEach((freq, i) => {
+      const entryDelay = i * 0.4; // Entrada más espaciada y contemplativa
+      createPadVoice(freq, now + entryDelay, chordDuration - entryDelay, 0.025, false);
     });
 
-    // Programar el siguiente acorde con overlap suave
-    musicTimer = setTimeout(playOrchestraChord, (chordDuration - overlapTime) * 1000);
+    // Programar el siguiente acorde
+    musicTimer = setTimeout(playAmbientChord, (chordDuration - overlapTime) * 1000);
   }
 
   function initMuseumAudio() {
@@ -491,18 +486,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!AudioContextClass) return false;
     audioCtx = new AudioContextClass();
 
-    // Bus maestro con ganancia de salida
+    // Bus maestro — volumen bajo para ambiente tranquilo
     masterBus = audioCtx.createGain();
-    masterBus.gain.setValueAtTime(0.72, audioCtx.currentTime);
+    masterBus.gain.setValueAtTime(0.50, audioCtx.currentTime);
 
-    // Reverb de sala de conciertos
+    // Reverb largo de catedral
     reverbNode = buildReverb(audioCtx);
 
-    // Mezcla seca/mojada: 55% reverb, 45% seco
+    // Mezcla 65% reverb, 35% seco — máximo ambiente envolvente
     const dryGain = audioCtx.createGain();
     const wetGain = audioCtx.createGain();
-    dryGain.gain.setValueAtTime(0.45, audioCtx.currentTime);
-    wetGain.gain.setValueAtTime(0.55, audioCtx.currentTime);
+    dryGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+    wetGain.gain.setValueAtTime(0.65, audioCtx.currentTime);
 
     masterBus.connect(dryGain);
     masterBus.connect(reverbNode);
@@ -526,10 +521,10 @@ document.addEventListener('DOMContentLoaded', () => {
       isPlayingMusic = true;
       if (audioBtn) {
         audioBtn.classList.add('btn-celebrate');
-        audioBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Orquesta de Museo</span>';
+        audioBtn.innerHTML = '<i class="fa-solid fa-volume-low"></i> <span>Ambiente Tranquilo</span>';
       }
       currentChord = 0;
-      playOrchestraChord();
+      playAmbientChord();
 
     } else {
       isPlayingMusic = false;
